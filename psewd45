@@ -1,0 +1,16 @@
+// Подключим хеш-функцию sha256.
+const crypto = require("crypto"), SHA256 = message => crypto.createHash("sha256").update(message).digest("hex");
+
+class Block {
+    constructor(timestamp = "", data = []) {
+        this.timestamp = timestamp;
+        this.data = data;
+        this.hash = this.getHash();
+        this.prevHash = ""; // хеш предыдущего блока
+    }
+
+    // Наша хеш-функция.
+    getHash() {
+        return SHA256(this.prevHash + this.timestamp + JSON.stringify(this.data));
+    }
+}
